@@ -7,7 +7,7 @@ import { Loader } from './Loader/Loader';
 import { Toaster } from 'react-hot-toast';
 import { LoadMoreBtn } from './LoadMoreBtn/LoadMoreBtn';
 import { nanoid } from 'nanoid';
-import { feach } from './api';
+import { fetch } from './api';
 import Modal from 'react-modal';
 import { ImageModal } from './ImageModal/ImageModal';
 import { ErrorMessage } from './ErrorMessage/ErrorMessage';
@@ -51,26 +51,26 @@ export const App = () => {
       return;
     }
 
-    async function fechData() {
+    async function fetchData() {
       try {
-        const fechedData = await feach(query.split('/')[1], page);
+        const fetchedData = await fetch(query.split('/')[1], page);
 
-        setData([...data, ...fechedData.results]);
-        setTotalPage(fechedData.total_pages);
+        setData([...data, ...fetchedData.results]);
+        setTotalPage(fetchedData.total_pages);
       } catch (error) {
         setError(true);
       } finally {
         setLoading(false);
       }
     }
-    fechData();
+    fetchData();
   }, [query, page]);
 
   return (
     <>
       <SearchForm onSearch={searchImages} />
       {error && <ErrorMessage />}
-      {data.length > 0 && <ImageGallery fechResult={data} onClick={openModal} />}
+      {data.length > 0 && <ImageGallery fetchResult={data} onClick={openModal} />}
       {loading && <Loader />}
       {data.length > 0 && !loading && totalPage !== page && (
         <LoadMoreBtn onClick={handleLoadMore} />
@@ -82,7 +82,7 @@ export const App = () => {
         contentLabel="Example Modal"
         className={css.modalWindow}
       >
-        <ImageModal fechResult={dataModal} />
+        <ImageModal fetchResult={dataModal} />
       </Modal>
     </>
   );

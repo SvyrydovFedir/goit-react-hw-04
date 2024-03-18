@@ -1,10 +1,10 @@
 import css from './ImageGallery.module.css';
-import { ImageCard } from '../ImageCard';
+import { ImageCard } from '../ImageCard/ImageCard';
 
-export const ImageGallery = ({ fechResult, onClick }) => {
+export const ImageGallery = ({ fetchResult, onClick }) => {
   return (
     <ul className={css.photoCard}>
-      {fechResult.map(item => (
+      {fetchResult.map(item => (
         <li
           key={item.id}
           onClick={() => {
