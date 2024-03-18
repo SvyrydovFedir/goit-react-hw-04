@@ -1,0 +1,9 @@
+.errorMessageBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.errorMessageBox > b {
+  color: #3846AD;
+  font-size: 35px;
+}
