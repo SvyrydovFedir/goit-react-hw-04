@@ -1,6 +1,6 @@
 import css from './App.module.css';
 
-import { SearchForm } from './SearchForm/SearchForm';
+import { SearchBar } from './SearchBar/SearchBar';
 import { useEffect, useState } from 'react';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Loader } from './Loader/Loader';
@@ -8,11 +8,9 @@ import { Toaster } from 'react-hot-toast';
 import { LoadMoreBtn } from './LoadMoreBtn/LoadMoreBtn';
 import { nanoid } from 'nanoid';
 import { fetch } from './api';
-import Modal from 'react-modal';
 import { ImageModal } from './ImageModal/ImageModal';
 import { ErrorMessage } from './ErrorMessage/ErrorMessage';
 
-Modal.setAppElement('#root');
 
 export const App = () => {
   const [query, setQuery] = useState('');
@@ -52,15 +50,16 @@ export const App = () => {
     }
 
     async function fetchData() {
+      setLoading(true);
       try {
         const fetchedData = await fetch(query.split('/')[1], page);
-
+    
         setData([...data, ...fetchedData.results]);
         setTotalPage(fetchedData.total_pages);
       } catch (error) {
         setError(true);
       } finally {
-        setLoading(false);
+        setLoading(false); 
       }
     }
     fetchData();
@@ -68,7 +67,7 @@ export const App = () => {
 
   return (
     <>
-      <SearchForm onSearch={searchImages} />
+      <SearchBar onSearch={searchImages} />
       {error && <ErrorMessage />}
       {data.length > 0 && <ImageGallery fetchResult={data} onClick={openModal} />}
       {loading && <Loader />}
@@ -76,14 +75,7 @@ export const App = () => {
         <LoadMoreBtn onClick={handleLoadMore} />
       )}
       <Toaster position="bottom-center" reverseOrder={false} />
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Example Modal"
-        className={css.modalWindow}
-      >
-        <ImageModal fetchResult={dataModal} />
-      </Modal>
+        <ImageModal fetchResult={dataModal} modalIsOpen={modalIsOpen} closeModal={closeModal} />
     </>
   );
 };

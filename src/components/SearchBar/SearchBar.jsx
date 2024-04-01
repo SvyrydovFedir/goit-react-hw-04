@@ -1,8 +1,8 @@
-import css from './SearchForm.module.css';
+import css from './SearchBar.module.css';
 import toast from 'react-hot-toast';
 import { IoSearchOutline } from 'react-icons/io5';
 
-export const SearchForm = ({ onSearch }) => {
+export const SearchBar = ({ onSearch }) => {
   const hendelSubmit = e => {
     e.preventDefault();
     onSearch(e.target.elements.query.value);

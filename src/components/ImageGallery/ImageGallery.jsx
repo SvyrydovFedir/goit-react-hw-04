@@ -7,11 +7,10 @@ export const ImageGallery = ({ fetchResult, onClick }) => {
       {fetchResult.map(item => (
         <li
           key={item.id}
-          onClick={() => {
-            onClick(item);
-          }}
         >
-          <ImageCard param={item} />
+          <ImageCard param={item} onClick={() => {
+            onClick(item);
+          }} />
         </li>
       ))}
     </ul>
