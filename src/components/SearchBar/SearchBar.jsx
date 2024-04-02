@@ -3,25 +3,27 @@ import toast from 'react-hot-toast';
 import { IoSearchOutline } from 'react-icons/io5';
 
 export const SearchBar = ({ onSearch }) => {
-  const hendelSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    onSearch(e.target.elements.query.value);
+    const query = e.target.elements.query.value.trim();
 
-    if (e.target.elements.query.value.trim() === '') {
+    if (query === '') {
       toast.error('EMPTY STRING');
       return;
     }
+
+    onSearch(query);
     e.target.reset();
   };
 
-  const handleScrol = e => {
+  const handleScroll = e => {
     console.dir(e);
   };
 
   return (
     <>
-      <header onScrollCapture={handleScrol} className={css.headerBox}>
-        <form className={css.headerForm} onSubmit={hendelSubmit}>
+      <header onScrollCapture={handleScroll} className={css.headerBox}>
+        <form className={css.headerForm} onSubmit={handleSubmit}>
           <input
             type="text"
             autoComplete="off"
